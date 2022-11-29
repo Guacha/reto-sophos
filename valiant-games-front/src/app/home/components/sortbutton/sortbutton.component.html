@@ -1,0 +1,8 @@
+<button
+	class="flex-shrink-0 text-white border-0 py-1 px-4 focus:outline-none rounded text-md sm:mt-0 transition-color duration-300 ease-in-out mr-4"
+	[ngClass]="{ 'bg-valiant-orange-secondary': direction === '', 'bg-valiant-orange-primary': direction !== '' }"
+	(click)="activate()"
+>
+	<i class="fa-solid {{ iconClass }}"></i>
+	<ng-content></ng-content>
+</button>
