@@ -2,19 +2,21 @@
 	<div class="text-2xl font-semibold text-center mb-10">Resumen</div>
 	<div class="py-5 border-b border-gray-300 flex justify-between">
 		<div class="text-lg">Subtotal</div>
-		<div class="text-lg font-bold" *ngIf="itemsTotal > 0; else noPrice">$14</div>
+		<div class="text-lg font-bold" *ngIf="itemsTotal > 0; else noPrice">${{ itemsTotal }}</div>
 	</div>
 	<div class="py-5 border-b border-gray-300 flex justify-between">
 		<div class="text-lg">Costo fijo Valiant</div>
-		<div class="text-lg font-bold" *ngIf="itemsTotal > 0; else noPrice">$1</div>
+		<div class="text-lg font-bold" *ngIf="itemsTotal > 0; else noPrice">${{ fixedCost }}</div>
 	</div>
 	<div class="py-5 border-b border-gray-300 flex justify-between">
 		<div class="text-lg">Seguro Reembolsable Valiant</div>
-		<div class="text-lg font-bold" *ngIf="itemsTotal > 0; else noPrice">$1</div>
+		<div class="text-lg font-bold" *ngIf="itemsTotal > 0; else noPrice">${{ insuranceCost }}</div>
 	</div>
 	<div class="py-5 border-b border-gray-300 flex justify-between">
 		<div class="text-xl font-bold">Total</div>
-		<div class="text-xl font-bold" *ngIf="itemsTotal > 0; else noPrice">$16</div>
+		<div class="text-xl font-bold" *ngIf="itemsTotal > 0; else noPrice">
+			${{ itemsTotal + fixedCost + insuranceCost }}
+		</div>
 	</div>
 	<ng-template #noPrice>
 		<div class="text-lg font-bold">$--</div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
 	selector: 'app-registerview',
@@ -21,7 +23,7 @@ export class RegisterviewComponent {
 
 	registerForm: FormGroup;
 
-	constructor(private fb: FormBuilder) {
+	constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
 		setInterval(() => {
 			this.chosenImage = this.images[Math.floor(Math.random() * this.images.length)];
 		}, 5000);
@@ -39,6 +41,7 @@ export class RegisterviewComponent {
 	}
 
 	submit() {
+		console.log(this.registerForm.value);
 		if (!this.registerForm.valid) {
 			Swal.fire({
 				title: 'Oops...',
@@ -50,6 +53,31 @@ export class RegisterviewComponent {
 			});
 			return;
 		}
+		this.authService.register(this.registerForm.value).subscribe(
+			(res) => {
+				Swal.fire({
+					title: 'Registro exitoso',
+					text: 'Ahora puedes iniciar sesión',
+					icon: 'success',
+					background: '#1A2F38',
+					confirmButtonColor: '#F4A261',
+					color: '#FFFFFF',
+					confirmButtonText: 'Iniciar sesión',
+				}).then((result) => {
+					this.router.navigate(['/login']);
+				});
+			},
+			(err) => {
+				Swal.fire({
+					title: 'Oops...',
+					text: 'Ha ocurrido un error',
+					icon: 'error',
+					background: '#1A2F38',
+					confirmButtonColor: '#F4A261',
+					color: '#FFFFFF',
+				});
+			}
+		);
 	}
 }
 

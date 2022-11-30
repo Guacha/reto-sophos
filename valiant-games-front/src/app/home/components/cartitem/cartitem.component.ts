@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Game } from 'src/app/models/game.models';
+import { CartItem } from 'src/app/services/cart.service';
 
 @Component({
 	selector: 'app-cartitem',
@@ -7,5 +7,5 @@ import { Game } from 'src/app/models/game.models';
 	styleUrls: ['./cartitem.component.css'],
 })
 export class CartitemComponent {
-	@Input() item: Game;
+	@Input() item: CartItem;
 }

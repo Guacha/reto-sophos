@@ -22,22 +22,22 @@
 				<span class="mr-6">Sort by:</span>
 				<app-sortbutton
 					(setSelected)="setActiveButton($event)"
-					[isSelected]="activeButton === 'Name'"
-					[column]="'Name'"
+					[isSelected]="activeButton === 'name'"
+					[column]="'name'"
 				>
 					Name
 				</app-sortbutton>
 				<app-sortbutton
 					(setSelected)="setActiveButton($event)"
-					[isSelected]="activeButton === 'Date'"
-					[column]="'Date'"
+					[isSelected]="activeButton === 'releaseDate'"
+					[column]="'releaseDate'"
 				>
 					Date
 				</app-sortbutton>
 				<app-sortbutton
 					(setSelected)="setActiveButton($event)"
-					[isSelected]="activeButton === 'Price'"
-					[column]="'Price'"
+					[isSelected]="activeButton === 'price'"
+					[column]="'price'"
 				>
 					Price
 				</app-sortbutton>

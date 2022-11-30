@@ -1,0 +1,25 @@
+{
+	"name": "valiant-games-back",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"prisma": {
+		"seed": "node prisma/seed.js"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon index.js",
+		"preparedb": "prisma generate && prisma db push && prisma db seed"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@prisma/client": "^4.7.0",
+		"cors": "^2.8.5",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^8.5.1"
+	},
+	"devDependencies": {
+		"prisma": "^4.7.0"
+	}
+}
