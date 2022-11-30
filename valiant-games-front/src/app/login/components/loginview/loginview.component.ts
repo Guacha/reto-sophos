@@ -46,18 +46,23 @@ export class LoginviewComponent {
 				color: '#FFFFFF',
 			});
 		}
-		const succ: boolean = this.authService.login(this.loginForm.value.email, this.loginForm.value.password);
-		if (!succ) {
-			Swal.fire({
-				title: 'Oops...',
-				text: 'Usuario o contraseña incorrectos',
-				icon: 'error',
-				background: '#1A2F38',
-				confirmButtonColor: '#F4A261',
-				color: '#FFFFFF',
-			});
-		}
-		// redirect to home
-		this.router.navigate(['/']);
+		const succ: boolean = true;
+
+		this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
+			(res) => {
+				this.authService.setToken(res.token);
+				this.router.navigate(['/']);
+			},
+			(err) => {
+				Swal.fire({
+					title: 'Oops...',
+					text: 'Usuario o contraseña incorrectos',
+					icon: 'error',
+					background: '#1A2F38',
+					confirmButtonColor: '#F4A261',
+					color: '#FFFFFF',
+				});
+			}
+		);
 	}
 }

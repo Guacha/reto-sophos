@@ -8,7 +8,13 @@ import { GameService } from 'src/app/services/game.service';
 	styleUrls: ['./mainhero.component.css'],
 })
 export class MainheroComponent {
-	games: Game[] = this.gameService.getGames();
+	games: Game[] = [];
+
+	ngOnInit(): void {
+		this.gameService.getGames().subscribe((games) => {
+			this.games = games;
+		});
+	}
 
 	constructor(private gameService: GameService) {}
 }

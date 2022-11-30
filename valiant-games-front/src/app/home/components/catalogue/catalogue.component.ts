@@ -22,9 +22,12 @@ export class CatalogueComponent {
 				this.searchQuery = '';
 			}
 		});
+		this.gameService.getGames().subscribe((games) => {
+			this.games = games;
+		});
 	}
 
-	games: Game[] = this.gameService.getGamesFilteredAndSorted(this.searchQuery, this.activeButton, this.sortDirection);
+	games: Game[] = [];
 
 	setActiveButton(button: string) {
 		console.log('setActiveButton called');
@@ -32,22 +35,22 @@ export class CatalogueComponent {
 		console.log(button.split(' '));
 		this.activeButton = button.split(' ')[0];
 		this.sortDirection = button.split(' ')[1];
-		this.games = this.gameService.getGamesFilteredAndSorted(
-			this.searchQuery,
-			this.activeButton,
-			this.sortDirection
-		);
+		this.gameService
+			.getGamesFilteredAndSorted(this.searchQuery, this.activeButton, this.sortDirection)
+			.subscribe((games) => {
+				this.games = games;
+			});
 	}
 
 	onSearchClick(query: string) {
 		console.log('onSearchClick called');
 		this.searchQuery = query;
 		console.log('searchQuery: ' + this.searchQuery);
-		this.games = this.gameService.getGamesFilteredAndSorted(
-			this.searchQuery,
-			this.activeButton,
-			this.sortDirection
-		);
+		this.gameService
+			.getGamesFilteredAndSorted(this.searchQuery, this.activeButton, this.sortDirection)
+			.subscribe((games) => {
+				this.games = games;
+			});
 	}
 
 	constructor(private gameService: GameService, private route: ActivatedRoute) {}

@@ -23,11 +23,11 @@ export class CartsummaryComponent {
 		return this.cart.getInsuranceCost();
 	}
 
-	getFixedCost(): number {
+	get fixedCost(): number {
 		return this.cart.getFixedCost();
 	}
 
 	get totalCost(): number {
-		return this.itemsTotal + this.insuranceCost + this.getFixedCost();
+		return this.itemsTotal + this.insuranceCost + this.fixedCost;
 	}
 }

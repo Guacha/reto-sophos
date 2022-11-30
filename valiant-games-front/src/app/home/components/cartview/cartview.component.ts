@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from 'src/app/models/game.models';
 import { AuthService } from 'src/app/services/auth.service';
-import { CartService } from 'src/app/services/cart.service';
+import { CartItem, CartService } from 'src/app/services/cart.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 	styleUrls: ['./cartview.component.css'],
 })
 export class CartviewComponent {
-	cartItems: Game[] = this.cartService.getCart();
+	cartItems: CartItem[] = this.cartService.getCart();
 
 	get total(): number {
 		return this.cartService.itemsTotal() + this.cartService.getInsuranceCost() + this.cartService.getFixedCost();

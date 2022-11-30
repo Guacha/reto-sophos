@@ -13,6 +13,7 @@ import { GameviewComponent } from './components/gameview/gameview.component';
 import { CartviewComponent } from './components/cartview/cartview.component';
 import { CartitemComponent } from './components/cartitem/cartitem.component';
 import { CartsummaryComponent } from './components/cartsummary/cartsummary.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,6 @@ import { CartsummaryComponent } from './components/cartsummary/cartsummary.compo
 		CartsummaryComponent,
 	],
 
-	imports: [CommonModule, HomeRoutingModule],
+	imports: [CommonModule, HomeRoutingModule, FormsModule],
 })
 export class HomeModule {}

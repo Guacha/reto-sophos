@@ -1,72 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Game } from '../models/game.models';
-import { GAMES, DIRECTORS, PLATFORMS, PUBLISHERS } from '../misc/store';
+import { Game, Platform } from '../models/game.models';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class GameService {
-	constructor() {}
+	constructor(private http: HttpClient) {}
 
-	getGames(): Game[] {
-		return GAMES;
+	getGames(): Observable<Game[]> {
+		return this.http.get<Game[]>('http://localhost:3000/games');
 	}
 
-	getGame(id: number): Game | undefined {
+	getGame(id: number): Observable<Game> {
 		console.log('getGame called');
 		console.log('id: ' + id);
-		return GAMES.find((game) => game.id === id);
+		return this.http.get<Game>('http://localhost:3000/games/' + id);
 	}
 
-	getGamesByDirector(directorId: number): Game[] {
-		return GAMES.filter((game) => game.directors.map((director) => director.id).includes(directorId));
+	getGamesFilteredAndSorted(filter: string, sort: string, order: 'asc' | 'desc' | string): Observable<Game[]> {
+		return this.http.get<Game[]>(
+			`http://localhost:3000/games/search?filter=${filter}&orderby=${sort}&order=${order}`
+		);
 	}
 
-	getGamesByPlatform(platformId: number): Game[] {
-		return GAMES.filter((game) => game.platforms.map((platform) => platform.id).includes(platformId));
-	}
-
-	getGamesFilteredAndSorted(filter: string, sort: string, order: 'asc' | 'desc' | string): Game[] {
-		console.log('getGamesFilteredAndSorted called');
-		let games = this.getGamesSorted(sort, order);
-		if (filter) {
-			filter = '';
-		}
-		games = games.filter((game) => game.name.toLowerCase().includes(filter.toLowerCase()));
-		return games;
-	}
-
-	getGamesSorted(sort: string, order: 'asc' | 'desc' | string): Game[] {
-		console.log('getGamesSorted called');
-		console.log('sort: ' + sort);
-		console.log('order: ' + order);
-		switch (sort) {
-			case 'Name':
-				return this.getGames().sort((a, b) => {
-					if (order === 'asc') {
-						return a.name.localeCompare(b.name);
-					} else {
-						return b.name.localeCompare(a.name);
-					}
-				});
-			case 'Price':
-				return this.getGames().sort((a, b) => {
-					if (order === 'asc') {
-						return a.price - b.price;
-					} else {
-						return b.price - a.price;
-					}
-				});
-			case 'Date':
-				return this.getGames().sort((a, b) => {
-					if (order === 'asc') {
-						return a.releaseDate.getTime() - b.releaseDate.getTime();
-					} else {
-						return b.releaseDate.getTime() - a.releaseDate.getTime();
-					}
-				});
-			default:
-				return this.getGames();
-		}
+	getPlatform(id: Number): Observable<Platform> {
+		return this.http.get<Platform>(`http://localhost:3000/platform/${id}`);
 	}
 }

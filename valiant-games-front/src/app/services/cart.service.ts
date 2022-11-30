@@ -1,20 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Game } from '../models/game.models';
+import { Game, Platform } from '../models/game.models';
 import { AuthService } from './auth.service';
+
+export interface CartItem {
+	game: Game;
+	chosenPlatform: Platform;
+	dayAmount: number;
+}
 
 @Injectable({
 	providedIn: 'root',
 })
 export class CartService {
-	cart: Game[] = [];
+	cart: CartItem[] = [];
 
-	addToCart(game: Game) {
-		this.cart.push(game);
+	addToCart(game: Game, chosenPlatform?: Platform, dayAmount?: number) {
+		const cartItem: CartItem = {
+			game,
+			chosenPlatform: chosenPlatform ?? game.platforms[0],
+			dayAmount: dayAmount ?? 7,
+		};
+
+		if (this.cart.find((item) => item.game.id === game.id)) {
+			return;
+		}
+		this.cart.push(cartItem);
 		this.saveToLocalStorage();
 	}
 
 	removeFromCart(game: Game) {
-		this.cart = this.cart.filter((g) => g.id !== game.id);
+		this.cart = this.cart.filter((item) => item.game.id !== game.id);
 		this.saveToLocalStorage();
 	}
 
@@ -27,9 +42,9 @@ export class CartService {
 		this.saveToLocalStorage();
 	}
 
-	setCart(game: Game) {
+	setCart(game: Game, chosenPlatform?: Platform, dayAmount?: number) {
 		this.clearCart();
-		this.addToCart(game);
+		this.addToCart(game, chosenPlatform, dayAmount);
 	}
 
 	getFromLocalStorage() {
@@ -53,7 +68,7 @@ export class CartService {
 	}
 
 	itemsTotal() {
-		return this.cart.reduce((total, game) => total + game.price, 0);
+		return this.cart.reduce((total, item) => total + item.game.price * item.dayAmount, 0);
 	}
 
 	getInsuranceCost() {
